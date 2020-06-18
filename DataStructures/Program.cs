@@ -26,7 +26,7 @@ namespace DataStructures
                 list.PrintList();
                 list.PrintDebug();
 
-                list.DeleteAt(1);
+                list.Delete(6);
                 list.PrintList();
                 list.PrintDebug();
             }
@@ -34,6 +34,11 @@ namespace DataStructures
             {
                 Console.WriteLine(exp.Message);
             }
+        }
+
+        public static void TestArray()
+        {
+
         }
     }
     class Program
