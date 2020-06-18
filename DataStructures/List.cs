@@ -119,7 +119,7 @@ namespace DataStructures
             {
                 search_pointer = list;
                 int index = 0;
-                while (search_pointer.next != null)
+                while (index < size)
                 {
                     if (search_pointer.value.CompareTo(value) == 0) return index;
                     search_pointer = search_pointer.next;
