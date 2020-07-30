@@ -21,7 +21,7 @@ namespace DataStructures
         void Clear();
     }
 
-    class TreeNode<T, K>
+    public class TreeNode<T, K>
     {
         public T value;
         public K key;
@@ -29,9 +29,9 @@ namespace DataStructures
         public TreeNode<T,K> left;
     }
 
-    delegate void f<T, K>(  TreeNode<T, K> node);
+    public delegate void f<T, K>(TreeNode<T, K> node);
 
-    class BinaryTree<T,K> : ITree<T,K> where K: IComparable<K>
+    public class BinaryTree<T,K> : ITree<T,K> where K: IComparable<K>
     {
         TreeNode<T,K> tree;
 
@@ -39,7 +39,7 @@ namespace DataStructures
         void _InfixTraverse(TreeNode<T, K> node, f<T, K> f)
         {
             TreeNode<T, K> ptr = node;
-            if (tree != null)
+            if (ptr != null)
             {
                 _InfixTraverse(ptr.left, f);
                 f(ptr);
@@ -57,11 +57,11 @@ namespace DataStructures
         void _PrefixTraverse(TreeNode<T, K> node, f<T, K> f)
         {
             TreeNode<T, K> ptr = node;
-            if (tree != null)
+            if (ptr != null)
             {
                 f(ptr);
-                _InfixTraverse(ptr.left, f);
-                _InfixTraverse(ptr.right, f);
+                _PrefixTraverse(ptr.left, f);
+                _PrefixTraverse(ptr.right, f);
             }
         }
 
@@ -74,10 +74,10 @@ namespace DataStructures
         void _PostfixTraverse(TreeNode<T, K> node, f<T, K> f)
         {
             TreeNode<T, K> ptr = node;
-            if (tree != null)
+            if (ptr != null)
             {
-                _InfixTraverse(ptr.left, f);
-                _InfixTraverse(ptr.right, f);
+                _PostfixTraverse(ptr.left, f);
+                _PostfixTraverse(ptr.right, f);
                 f(ptr);
             }
         }
@@ -100,14 +100,14 @@ namespace DataStructures
             }
             TreeNode<T,K> ptr = tree;
             
-            while ((ptr.right != null)||(ptr.left != null))
+            while ((ptr.right != null)&&(ptr.left != null))
             {
                 switch (key.CompareTo(ptr.key))
                 {
-                    case int result when result < 0:
+                    case int result when result > 0:
                         ptr = ptr.left;
                         break;
-                    case int result when result > 0:
+                    case int result when result < 0:
                         ptr = ptr.right;
                         break;
                     case 0:
@@ -117,11 +117,11 @@ namespace DataStructures
 
             switch (key.CompareTo(ptr.key))
             {
-                case int tmp when tmp < 0:
+                case int tmp when tmp > 0:
                     ptr.left = new TreeNode<T,K>();
                     ptr = ptr.left;
                     break;
-                case int tmp when tmp > 0:
+                case int tmp when tmp < 0:
                     ptr.right = new TreeNode<T,K>();
                     ptr = ptr.right;
                     break;
@@ -137,10 +137,10 @@ namespace DataStructures
             {
                 switch (key.CompareTo(ptr.key))
                 {
-                    case int res when res > 0:
+                    case int res when res < 0:
                         _Delete(ref ptr.right, key);
                         break;
-                    case int res when res < 0:
+                    case int res when res > 0:
                         _Delete(ref ptr.left, key);
                         break;
                     case int res when res == 0:
@@ -201,8 +201,8 @@ namespace DataStructures
             {
                 int res = key.CompareTo(ptr.key);
                 if (res == 0) return (ptr.value, FoundState.Found);
-                if (res < 0) return __Find(ptr.left,key);
-                if (res > 0) return __Find(ptr.right, key);
+                if (res > 0) return __Find(ptr.left,key);
+                if (res < 0) return __Find(ptr.right, key);
             }
             return (default(T), FoundState.NotFound);
         }
