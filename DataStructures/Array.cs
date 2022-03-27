@@ -4,12 +4,21 @@ using System.Text;
 
 namespace DataStructures
 {
-    public class Array<T> where T: IComparable<T>
+    public class Array<T> where T : IComparable<T>
     {
         T[] arr = null;
         int size = 0;
         int max_size = 10;
         bool need_resize = false;
+
+        public Array()
+        {
+
+        }
+
+        public Array(int size){
+            max_size = size;
+        }
 
         public T this[int index] {
             get
